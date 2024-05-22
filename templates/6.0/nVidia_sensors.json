@@ -1,0 +1,408 @@
+{
+    "zabbix_export": {
+        "version": "6.0",
+        "date": "2024-05-22T11:01:35Z",
+        "groups": [
+            {
+                "uuid": "7df96b18c230490a9a0a9e2307226338",
+                "name": "Templates"
+            }
+        ],
+        "templates": [
+            {
+                "uuid": "a021d16dab6741fdb0852d16df32b1f1",
+                "template": "nVidia Sensors",
+                "name": "nVidia Sensors",
+                "description": "LLD - nVidia Sensors\n\n## Author\n\nLukas Maly",
+                "groups": [
+                    {
+                        "name": "Templates"
+                    }
+                ],
+                "discovery_rules": [
+                    {
+                        "uuid": "78e43b7ab00545de9f342fe14f897186",
+                        "name": "nVidia discovery",
+                        "key": "gpu.discovery",
+                        "delay": "1h",
+                        "lifetime": "1d",
+                        "description": "UserParameter=gpu.discovery,/etc/zabbix/script/gpu-count.sh",
+                        "item_prototypes": [
+                            {
+                                "uuid": "34cb71ccc3b0410496c3d040ad4982f3",
+                                "name": "GPU {#GPUINDEX} Fan Speed",
+                                "key": "gpu.fanspeed[{#GPUINDEX}]",
+                                "units": "%",
+                                "description": "{#GPU} - {#GPUUUID}",
+                                "tags": [
+                                    {
+                                        "tag": "component",
+                                        "value": "nvidia"
+                                    },
+                                    {
+                                        "tag": "gpuid",
+                                        "value": "{#GPUINDEX}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "8f4ba217221041ae8cd98c92a7491821",
+                                "name": "GPU {#GPUINDEX} Free Memory",
+                                "key": "gpu.free[{#GPUINDEX}]",
+                                "delay": "30",
+                                "value_type": "FLOAT",
+                                "units": "B",
+                                "description": "{#GPU} - {#GPUUUID}",
+                                "preprocessing": [
+                                    {
+                                        "type": "MULTIPLIER",
+                                        "parameters": [
+                                            "1048576"
+                                        ]
+                                    }
+                                ],
+                                "tags": [
+                                    {
+                                        "tag": "component",
+                                        "value": "nvidia"
+                                    },
+                                    {
+                                        "tag": "gpuid",
+                                        "value": "{#GPUINDEX}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "bcaeaa3bc9d84685a5859fc548f75337",
+                                "name": "GPU {#GPUINDEX} Total Memory",
+                                "key": "gpu.memtotal[{#GPUINDEX}]",
+                                "delay": "30",
+                                "value_type": "FLOAT",
+                                "units": "B",
+                                "description": "{#GPU} - {#GPUUUID}",
+                                "preprocessing": [
+                                    {
+                                        "type": "MULTIPLIER",
+                                        "parameters": [
+                                            "1048576"
+                                        ]
+                                    }
+                                ],
+                                "tags": [
+                                    {
+                                        "tag": "component",
+                                        "value": "nvidia"
+                                    },
+                                    {
+                                        "tag": "gpuid",
+                                        "value": "{#GPUINDEX}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "c6af6607d83647d2b77bdd4dbaf361b2",
+                                "name": "GPU {#GPUINDEX} Power",
+                                "key": "gpu.power[{#GPUINDEX}]",
+                                "delay": "30",
+                                "value_type": "FLOAT",
+                                "units": "W",
+                                "description": "{#GPU} - {#GPUUUID}",
+                                "tags": [
+                                    {
+                                        "tag": "component",
+                                        "value": "nvidia"
+                                    },
+                                    {
+                                        "tag": "gpuid",
+                                        "value": "{#GPUINDEX}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "31ccbea820014058967a0134cebeb0db",
+                                "name": "GPU {#GPUINDEX} Temperature",
+                                "key": "gpu.temp[{#GPUINDEX}]",
+                                "delay": "30",
+                                "units": "C",
+                                "description": "{#GPU} - {#GPUUUID}",
+                                "tags": [
+                                    {
+                                        "tag": "component",
+                                        "value": "nvidia"
+                                    },
+                                    {
+                                        "tag": "gpuid",
+                                        "value": "{#GPUINDEX}"
+                                    }
+                                ],
+                                "trigger_prototypes": [
+                                    {
+                                        "uuid": "a1e4e92b086742b48d1a668e2e235534",
+                                        "expression": "last(/nVidia Sensors/gpu.temp[{#GPUINDEX}],#2)>{$GPU_MAX_TEMERATURE}",
+                                        "name": "GPU {#GPUINDEX} Temperature over {$GPU_MAX_TEMERATURE}\u00b0C {HOSTNAME}",
+                                        "priority": "AVERAGE",
+                                        "tags": [
+                                            {
+                                                "tag": "target",
+                                                "value": "gpu"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "4a0ade7eb84e4bad91fb1b417c873b01",
+                                "name": "GPU {#GPUINDEX} Used Memory",
+                                "key": "gpu.used[{#GPUINDEX}]",
+                                "delay": "30",
+                                "value_type": "FLOAT",
+                                "units": "B",
+                                "description": "{#GPU} - {#GPUUUID}",
+                                "preprocessing": [
+                                    {
+                                        "type": "MULTIPLIER",
+                                        "parameters": [
+                                            "1048576"
+                                        ]
+                                    }
+                                ],
+                                "tags": [
+                                    {
+                                        "tag": "component",
+                                        "value": "nvidia"
+                                    },
+                                    {
+                                        "tag": "gpuid",
+                                        "value": "{#GPUINDEX}"
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "5a4cbb9d917f4cc7859e3b27df06d29e",
+                                "name": "GPU {#GPUINDEX} Utilization",
+                                "key": "gpu.utilisation[{#GPUINDEX}]",
+                                "delay": "30",
+                                "value_type": "FLOAT",
+                                "units": "%",
+                                "description": "{#GPU} - {#GPUUUID}",
+                                "tags": [
+                                    {
+                                        "tag": "component",
+                                        "value": "nvidia"
+                                    },
+                                    {
+                                        "tag": "gpuid",
+                                        "value": "{#GPUINDEX}"
+                                    }
+                                ]
+                            }
+                        ],
+                        "graph_prototypes": [
+                            {
+                                "uuid": "baf5a0bfffb24f3d8ccb4f481f25700b",
+                                "name": "GPU {#GPUINDEX} Fan Speed",
+                                "graph_items": [
+                                    {
+                                        "drawtype": "GRADIENT_LINE",
+                                        "color": "199C0D",
+                                        "calc_fnc": "ALL",
+                                        "item": {
+                                            "host": "nVidia Sensors",
+                                            "key": "gpu.fanspeed[{#GPUINDEX}]"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "f5b545e324324c2291a556bf662e0dc2",
+                                "name": "GPU {#GPUINDEX} Memory",
+                                "graph_items": [
+                                    {
+                                        "drawtype": "BOLD_LINE",
+                                        "color": "4000FF",
+                                        "calc_fnc": "ALL",
+                                        "item": {
+                                            "host": "nVidia Sensors",
+                                            "key": "gpu.memtotal[{#GPUINDEX}]"
+                                        }
+                                    },
+                                    {
+                                        "sortorder": "1",
+                                        "drawtype": "BOLD_LINE",
+                                        "color": "199C0D",
+                                        "calc_fnc": "ALL",
+                                        "item": {
+                                            "host": "nVidia Sensors",
+                                            "key": "gpu.free[{#GPUINDEX}]"
+                                        }
+                                    },
+                                    {
+                                        "sortorder": "2",
+                                        "drawtype": "BOLD_LINE",
+                                        "color": "F63100",
+                                        "calc_fnc": "ALL",
+                                        "item": {
+                                            "host": "nVidia Sensors",
+                                            "key": "gpu.used[{#GPUINDEX}]"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "2916e9cfeebb4e8398aef6e3e1f88e0c",
+                                "name": "GPU {#GPUINDEX} Power",
+                                "graph_items": [
+                                    {
+                                        "drawtype": "GRADIENT_LINE",
+                                        "color": "0040FF",
+                                        "calc_fnc": "ALL",
+                                        "item": {
+                                            "host": "nVidia Sensors",
+                                            "key": "gpu.power[{#GPUINDEX}]"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "a45a69fdb82e46618b11dcb7bbf8add8",
+                                "name": "GPU {#GPUINDEX} Temperatire",
+                                "graph_items": [
+                                    {
+                                        "drawtype": "GRADIENT_LINE",
+                                        "color": "0080FF",
+                                        "calc_fnc": "ALL",
+                                        "item": {
+                                            "host": "nVidia Sensors",
+                                            "key": "gpu.temp[{#GPUINDEX}]"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "uuid": "da3d3b12f2f74155be9b5f3d0e9be53e",
+                                "name": "GPU {#GPUINDEX} Utilization",
+                                "graph_items": [
+                                    {
+                                        "drawtype": "GRADIENT_LINE",
+                                        "color": "FF0000",
+                                        "calc_fnc": "ALL",
+                                        "item": {
+                                            "host": "nVidia Sensors",
+                                            "key": "gpu.utilisation[{#GPUINDEX}]"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$GPU_MAX_TEMERATURE}",
+                        "value": "95"
+                    }
+                ],
+                "dashboards": [
+                    {
+                        "uuid": "e36d0ba1f64743759b2165cc2863696c",
+                        "name": "nVidia Sensors",
+                        "pages": [
+                            {
+                                "name": "GPU Memory and Utilization",
+                                "widgets": [
+                                    {
+                                        "type": "GRAPH_PROTOTYPE",
+                                        "width": "24",
+                                        "height": "5",
+                                        "fields": [
+                                            {
+                                                "type": "GRAPH_PROTOTYPE",
+                                                "name": "graphid",
+                                                "value": {
+                                                    "host": "nVidia Sensors",
+                                                    "name": "GPU {#GPUINDEX} Memory"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "GRAPH_PROTOTYPE",
+                                        "y": "5",
+                                        "width": "24",
+                                        "height": "5",
+                                        "fields": [
+                                            {
+                                                "type": "GRAPH_PROTOTYPE",
+                                                "name": "graphid",
+                                                "value": {
+                                                    "host": "nVidia Sensors",
+                                                    "name": "GPU {#GPUINDEX} Utilization"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "GPU Fun and Power",
+                                "widgets": [
+                                    {
+                                        "type": "GRAPH_PROTOTYPE",
+                                        "width": "24",
+                                        "height": "5",
+                                        "fields": [
+                                            {
+                                                "type": "GRAPH_PROTOTYPE",
+                                                "name": "graphid",
+                                                "value": {
+                                                    "host": "nVidia Sensors",
+                                                    "name": "GPU {#GPUINDEX} Fan Speed"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "GRAPH_PROTOTYPE",
+                                        "y": "5",
+                                        "width": "24",
+                                        "height": "5",
+                                        "fields": [
+                                            {
+                                                "type": "GRAPH_PROTOTYPE",
+                                                "name": "graphid",
+                                                "value": {
+                                                    "host": "nVidia Sensors",
+                                                    "name": "GPU {#GPUINDEX} Power"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "GPU Temperature",
+                                "widgets": [
+                                    {
+                                        "type": "GRAPH_PROTOTYPE",
+                                        "width": "24",
+                                        "height": "5",
+                                        "fields": [
+                                            {
+                                                "type": "GRAPH_PROTOTYPE",
+                                                "name": "graphid",
+                                                "value": {
+                                                    "host": "nVidia Sensors",
+                                                    "name": "GPU {#GPUINDEX} Temperatire"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

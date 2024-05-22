@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>6.0</version>
+    <date>2024-05-22T11:01:34Z</date>
+    <groups>
+        <group>
+            <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <uuid>a021d16dab6741fdb0852d16df32b1f1</uuid>
+            <template>nVidia Sensors</template>
+            <name>nVidia Sensors</name>
+            <description>LLD - nVidia Sensors
+
+## Author
+
+Lukas Maly</description>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>78e43b7ab00545de9f342fe14f897186</uuid>
+                    <name>nVidia discovery</name>
+                    <key>gpu.discovery</key>
+                    <delay>1h</delay>
+                    <lifetime>1d</lifetime>
+                    <description>UserParameter=gpu.discovery,/etc/zabbix/script/gpu-count.sh</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>34cb71ccc3b0410496c3d040ad4982f3</uuid>
+                            <name>GPU {#GPUINDEX} Fan Speed</name>
+                            <key>gpu.fanspeed[{#GPUINDEX}]</key>
+                            <units>%</units>
+                            <description>{#GPU} - {#GPUUUID}</description>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>nvidia</value>
+                                </tag>
+                                <tag>
+                                    <tag>gpuid</tag>
+                                    <value>{#GPUINDEX}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>8f4ba217221041ae8cd98c92a7491821</uuid>
+                            <name>GPU {#GPUINDEX} Free Memory</name>
+                            <key>gpu.free[{#GPUINDEX}]</key>
+                            <delay>30</delay>
+                            <value_type>FLOAT</value_type>
+                            <units>B</units>
+                            <description>{#GPU} - {#GPUUUID}</description>
+                            <preprocessing>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>1048576</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>nvidia</value>
+                                </tag>
+                                <tag>
+                                    <tag>gpuid</tag>
+                                    <value>{#GPUINDEX}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>bcaeaa3bc9d84685a5859fc548f75337</uuid>
+                            <name>GPU {#GPUINDEX} Total Memory</name>
+                            <key>gpu.memtotal[{#GPUINDEX}]</key>
+                            <delay>30</delay>
+                            <value_type>FLOAT</value_type>
+                            <units>B</units>
+                            <description>{#GPU} - {#GPUUUID}</description>
+                            <preprocessing>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>1048576</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>nvidia</value>
+                                </tag>
+                                <tag>
+                                    <tag>gpuid</tag>
+                                    <value>{#GPUINDEX}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>c6af6607d83647d2b77bdd4dbaf361b2</uuid>
+                            <name>GPU {#GPUINDEX} Power</name>
+                            <key>gpu.power[{#GPUINDEX}]</key>
+                            <delay>30</delay>
+                            <value_type>FLOAT</value_type>
+                            <units>W</units>
+                            <description>{#GPU} - {#GPUUUID}</description>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>nvidia</value>
+                                </tag>
+                                <tag>
+                                    <tag>gpuid</tag>
+                                    <value>{#GPUINDEX}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>31ccbea820014058967a0134cebeb0db</uuid>
+                            <name>GPU {#GPUINDEX} Temperature</name>
+                            <key>gpu.temp[{#GPUINDEX}]</key>
+                            <delay>30</delay>
+                            <units>C</units>
+                            <description>{#GPU} - {#GPUUUID}</description>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>nvidia</value>
+                                </tag>
+                                <tag>
+                                    <tag>gpuid</tag>
+                                    <value>{#GPUINDEX}</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>a1e4e92b086742b48d1a668e2e235534</uuid>
+                                    <expression>last(/nVidia Sensors/gpu.temp[{#GPUINDEX}],#2)&gt;{$GPU_MAX_TEMERATURE}</expression>
+                                    <name>GPU {#GPUINDEX} Temperature over {$GPU_MAX_TEMERATURE}°C {HOSTNAME}</name>
+                                    <priority>AVERAGE</priority>
+                                    <tags>
+                                        <tag>
+                                            <tag>target</tag>
+                                            <value>gpu</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>4a0ade7eb84e4bad91fb1b417c873b01</uuid>
+                            <name>GPU {#GPUINDEX} Used Memory</name>
+                            <key>gpu.used[{#GPUINDEX}]</key>
+                            <delay>30</delay>
+                            <value_type>FLOAT</value_type>
+                            <units>B</units>
+                            <description>{#GPU} - {#GPUUUID}</description>
+                            <preprocessing>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>1048576</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>nvidia</value>
+                                </tag>
+                                <tag>
+                                    <tag>gpuid</tag>
+                                    <value>{#GPUINDEX}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>5a4cbb9d917f4cc7859e3b27df06d29e</uuid>
+                            <name>GPU {#GPUINDEX} Utilization</name>
+                            <key>gpu.utilisation[{#GPUINDEX}]</key>
+                            <delay>30</delay>
+                            <value_type>FLOAT</value_type>
+                            <units>%</units>
+                            <description>{#GPU} - {#GPUUUID}</description>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>nvidia</value>
+                                </tag>
+                                <tag>
+                                    <tag>gpuid</tag>
+                                    <value>{#GPUINDEX}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <uuid>baf5a0bfffb24f3d8ccb4f481f25700b</uuid>
+                            <name>GPU {#GPUINDEX} Fan Speed</name>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>199C0D</color>
+                                    <calc_fnc>ALL</calc_fnc>
+                                    <item>
+                                        <host>nVidia Sensors</host>
+                                        <key>gpu.fanspeed[{#GPUINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <uuid>f5b545e324324c2291a556bf662e0dc2</uuid>
+                            <name>GPU {#GPUINDEX} Memory</name>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>BOLD_LINE</drawtype>
+                                    <color>4000FF</color>
+                                    <calc_fnc>ALL</calc_fnc>
+                                    <item>
+                                        <host>nVidia Sensors</host>
+                                        <key>gpu.memtotal[{#GPUINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <drawtype>BOLD_LINE</drawtype>
+                                    <color>199C0D</color>
+                                    <calc_fnc>ALL</calc_fnc>
+                                    <item>
+                                        <host>nVidia Sensors</host>
+                                        <key>gpu.free[{#GPUINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <drawtype>BOLD_LINE</drawtype>
+                                    <color>F63100</color>
+                                    <calc_fnc>ALL</calc_fnc>
+                                    <item>
+                                        <host>nVidia Sensors</host>
+                                        <key>gpu.used[{#GPUINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <uuid>2916e9cfeebb4e8398aef6e3e1f88e0c</uuid>
+                            <name>GPU {#GPUINDEX} Power</name>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>0040FF</color>
+                                    <calc_fnc>ALL</calc_fnc>
+                                    <item>
+                                        <host>nVidia Sensors</host>
+                                        <key>gpu.power[{#GPUINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <uuid>a45a69fdb82e46618b11dcb7bbf8add8</uuid>
+                            <name>GPU {#GPUINDEX} Temperatire</name>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>0080FF</color>
+                                    <calc_fnc>ALL</calc_fnc>
+                                    <item>
+                                        <host>nVidia Sensors</host>
+                                        <key>gpu.temp[{#GPUINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <uuid>da3d3b12f2f74155be9b5f3d0e9be53e</uuid>
+                            <name>GPU {#GPUINDEX} Utilization</name>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>FF0000</color>
+                                    <calc_fnc>ALL</calc_fnc>
+                                    <item>
+                                        <host>nVidia Sensors</host>
+                                        <key>gpu.utilisation[{#GPUINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$GPU_MAX_TEMERATURE}</macro>
+                    <value>95</value>
+                </macro>
+            </macros>
+            <dashboards>
+                <dashboard>
+                    <uuid>e36d0ba1f64743759b2165cc2863696c</uuid>
+                    <name>nVidia Sensors</name>
+                    <pages>
+                        <page>
+                            <name>GPU Memory and Utilization</name>
+                            <widgets>
+                                <widget>
+                                    <type>GRAPH_PROTOTYPE</type>
+                                    <width>24</width>
+                                    <height>5</height>
+                                    <fields>
+                                        <field>
+                                            <type>GRAPH_PROTOTYPE</type>
+                                            <name>graphid</name>
+                                            <value>
+                                                <host>nVidia Sensors</host>
+                                                <name>GPU {#GPUINDEX} Memory</name>
+                                            </value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>GRAPH_PROTOTYPE</type>
+                                    <y>5</y>
+                                    <width>24</width>
+                                    <height>5</height>
+                                    <fields>
+                                        <field>
+                                            <type>GRAPH_PROTOTYPE</type>
+                                            <name>graphid</name>
+                                            <value>
+                                                <host>nVidia Sensors</host>
+                                                <name>GPU {#GPUINDEX} Utilization</name>
+                                            </value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                            </widgets>
+                        </page>
+                        <page>
+                            <name>GPU Fun and Power</name>
+                            <widgets>
+                                <widget>
+                                    <type>GRAPH_PROTOTYPE</type>
+                                    <width>24</width>
+                                    <height>5</height>
+                                    <fields>
+                                        <field>
+                                            <type>GRAPH_PROTOTYPE</type>
+                                            <name>graphid</name>
+                                            <value>
+                                                <host>nVidia Sensors</host>
+                                                <name>GPU {#GPUINDEX} Fan Speed</name>
+                                            </value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>GRAPH_PROTOTYPE</type>
+                                    <y>5</y>
+                                    <width>24</width>
+                                    <height>5</height>
+                                    <fields>
+                                        <field>
+                                            <type>GRAPH_PROTOTYPE</type>
+                                            <name>graphid</name>
+                                            <value>
+                                                <host>nVidia Sensors</host>
+                                                <name>GPU {#GPUINDEX} Power</name>
+                                            </value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                            </widgets>
+                        </page>
+                        <page>
+                            <name>GPU Temperature</name>
+                            <widgets>
+                                <widget>
+                                    <type>GRAPH_PROTOTYPE</type>
+                                    <width>24</width>
+                                    <height>5</height>
+                                    <fields>
+                                        <field>
+                                            <type>GRAPH_PROTOTYPE</type>
+                                            <name>graphid</name>
+                                            <value>
+                                                <host>nVidia Sensors</host>
+                                                <name>GPU {#GPUINDEX} Temperatire</name>
+                                            </value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                            </widgets>
+                        </page>
+                    </pages>
+                </dashboard>
+            </dashboards>
+        </template>
+    </templates>
+</zabbix_export>
